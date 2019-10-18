@@ -1,6 +1,5 @@
 import { BlobServiceClient, SharedKeyCredential, ContainerClient } from "@azure/storage-blob";
 
-// https://github.com/Azure/azure-sdk-for-js/blob/feature/storage/sdk/storage/storage-blob/samples/typescript/advanced.ts
 export interface IAzureStorageProcessorSettings {
     account: string;
     accountKey: string;

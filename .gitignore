@@ -1,6 +1,8 @@
 /.[Ll]ocal
 /[Aa]rtifacts
 
+*.csv
+
 # Logs
 logs
 *.log

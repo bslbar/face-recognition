@@ -1,6 +1,7 @@
 import * as fs from 'fs';
+
 import { AzureStorageProcessor, AzureImageAnalyzer, GoogleImageAnalyzer } from './modules';
-import { AnalysisService } from './services';
+import { AnalysisService, ParseCsv } from './services';
 
 
 const settings = JSON.parse(fs.readFileSync('.local/settings.json').toString());
@@ -10,7 +11,11 @@ const azureImageAnalyzer: AzureImageAnalyzer = new AzureImageAnalyzer(settings.a
 const googleImageAnalyzer: GoogleImageAnalyzer = new GoogleImageAnalyzer();
 
 const service = new AnalysisService(azureStorageProcessor, azureImageAnalyzer, googleImageAnalyzer);
-service.doWork().then(output => {
-    console.info(output);
-    console.log("FINITO!");
+service.doWork().then(document => {
+    console.info(document);
+
+    const parse = new ParseCsv('output');
+    parse.do(document).then( () => {
+        console.info('ddd');
+    }); 
 });
