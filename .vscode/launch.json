@@ -16,11 +16,7 @@
                 "--nolazy",
                 "-r",
                 "ts-node/register"
-            ],
-            "env": {
-                "TS_NODE_IGNORE": "false",
-                "GOOGLE_APPLICATION_CREDENTIALS": "${workspaceFolder}/.local/google-credentials.json"
-            }
+            ]
         }
     ]
 }

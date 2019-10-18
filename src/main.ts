@@ -1,7 +1,10 @@
 import * as fs from 'fs';
 
+
 import { AzureStorageProcessor, AzureImageAnalyzer, GoogleImageAnalyzer } from './modules';
 import { AnalysisService, ParseCsv } from './services';
+
+process.env.GOOGLE_APPLICATION_CREDENTIALS = '.local/google-credentials.json';
 
 
 const settings = JSON.parse(fs.readFileSync('.local/settings.json').toString());
@@ -15,7 +18,7 @@ service.doWork().then(document => {
     console.info(document);
 
     const parse = new ParseCsv('output');
-    parse.do(document).then( () => {
+    parse.do(document).then(() => {
         console.info('ddd');
-    }); 
+    });
 });
