@@ -6,11 +6,21 @@
     "configurations": [
         {
             "type": "node",
-            "request": "attach",
-            "name": "Run test:dev environment",
-            "cwd": "${workspaceRoot}",
-            "protocol": "inspector",
-            "preLaunchTask": "npm_start_dev"
+            "request": "launch",
+            "name": "Launch Program",
+            "args": [
+                "${workspaceFolder}/src/main.ts"
+            ],
+            "cwd": "${workspaceFolder}",
+            "runtimeArgs": [
+                "--nolazy",
+                "-r",
+                "ts-node/register"
+            ],
+            "env": {
+                "TS_NODE_IGNORE": "false",
+                "GOOGLE_APPLICATION_CREDENTIALS": "${workspaceFolder}/.local/google-credentials.json"
+            }
         }
     ]
 }

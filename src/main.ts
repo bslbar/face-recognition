@@ -1,8 +1,16 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import * as fs from 'fs';
+import { AzureStorageProcessor, AzureImageAnalyzer, GoogleImageAnalyzer } from './modules';
+import { AnalysisService } from './services';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
-}
-bootstrap();
+
+const settings = JSON.parse(fs.readFileSync('.local/settings.json').toString());
+
+const azureStorageProcessor: AzureStorageProcessor = new AzureStorageProcessor(settings.azure_storage);
+const azureImageAnalyzer: AzureImageAnalyzer = new AzureImageAnalyzer(settings.azure_vision);
+const googleImageAnalyzer: GoogleImageAnalyzer = new GoogleImageAnalyzer();
+
+const service = new AnalysisService(azureStorageProcessor, azureImageAnalyzer, googleImageAnalyzer);
+service.doWork().then(output => {
+    console.info(output);
+    console.log("FINITO!");
+});
