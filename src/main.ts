@@ -15,10 +15,10 @@ const googleImageAnalyzer: GoogleImageAnalyzer = new GoogleImageAnalyzer();
 
 const service = new AnalysisService(azureStorageProcessor, azureImageAnalyzer, googleImageAnalyzer);
 service.doWork().then(document => {
-    console.info(document);
+    console.log('Finished creation document!');
 
     const parse = new ParseCsv('output');
     parse.do(document).then(() => {
-        console.info('ddd');
+        console.info('Transformed to CSV!');
     });
 });

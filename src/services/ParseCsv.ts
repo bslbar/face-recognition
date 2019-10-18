@@ -10,9 +10,11 @@ export class ParseCsv {
     }
 
     async do(document: any) {
-        json2csvAsync(document)
-            .then((csv: any) => fs.writeFileSync(`${this._nameDocument}.csv`, csv))
-            .catch((err: any) => console.log('ERROR: ' + err.message));
+        json2csvAsync(document, {
+            emptyFieldValue: []
+        })
+        .then((csv: any) => fs.writeFileSync(`${this._nameDocument}.csv`, csv))
+        .catch((err: any) => console.log('ERROR: ' + err.message));
     }
-    
+
 }

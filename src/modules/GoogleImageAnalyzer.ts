@@ -12,14 +12,11 @@ export class GoogleImageAnalyzer {
         return new Promise<any>(async (resolve, reject) => {
             try {                
                 const [result] = await this._client.faceDetection(imageUrl);
-                resolve(result)
+                resolve(result.faceAnnotations)
             } catch (error) {
                 reject(error);
             }
         });
     }
 
-    dispose():Promise<void> {
-        return new Promise<void>(resolve => resolve());
-    }
 }
