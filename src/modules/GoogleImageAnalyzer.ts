@@ -1,5 +1,9 @@
 import vision from '@google-cloud/vision';
 
+interface IGoogleFaceVision {
+    cropHintsAnnotation: null
+}
+
 export class GoogleImageAnalyzer {
 
     readonly _client: any;
@@ -11,8 +15,8 @@ export class GoogleImageAnalyzer {
     analyzeImage(imageUrl: string): Promise<any> {
         return new Promise<any>(async (resolve, reject) => {
             try {                
-                const [result] = await this._client.faceDetection(imageUrl);
-                resolve(result.faceAnnotations)
+                const [response] = await this._client.faceDetection(imageUrl);
+                resolve(response.faceAnnotations[0])
             } catch (error) {
                 reject(error);
             }

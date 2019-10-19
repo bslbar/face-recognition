@@ -36,9 +36,9 @@ export class AzureImageAnalyzer {
                     }
                 };
 
-                var result = JSON.parse(await request.post(this._uriBase, options));
-
-                resolve(result);
+                const [response]: any = JSON.parse(await request.post(this._uriBase, options));
+                
+                resolve(response);
             } catch (error) {
                 reject(error);
             }
