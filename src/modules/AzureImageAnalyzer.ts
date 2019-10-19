@@ -29,23 +29,26 @@ export class AzureImageAnalyzer {
         return new Promise<any>(async (resolve, reject) => {
             try {
                 const options = {
-                    body: `{"url": "${imageUrl}" }`,
+                    body: `{ "url" : "${imageUrl}" }`,
                     headers: {
                         'Content-Type': 'application/json',
                         'Ocp-Apim-Subscription-Key': this._settings.subscriptionKey
                     }
                 };
 
-                const [response]: any = JSON.parse(await request.post(this._uriBase, options));
+                const responses: any[] = JSON.parse(await request.post(this._uriBase, options));
                 
-                resolve(response);
+                // add dynamic index to object because conversion doesn't work with arrays
+                let result: object;
+                responses.forEach((response, index) => {
+                    result = JSON.parse(`{ ${index} : ${JSON.stringify(response.faceAttributes)}}`);
+                });
+                
+                resolve(result);
             } catch (error) {
                 reject(error);
             }
         });
     }
 
-    dispose(): Promise<void> {
-        return new Promise<void>(resolve => resolve());
-    }
 }

@@ -16,12 +16,12 @@ export class AnalysisService {
         console.log('Start downloading uri images...');
         const images: IStorageProcessorItem[] = await this.storageProcessor.getFileUrisAsync();
 
-        console.log('Start analyze images...');
         for (let i = 0; i < images.length; i++) {
+            console.log(`Start analyze images ${images[i].name}...`);
             output.push({
                 image: images[i],
                 azureResult: await this.azureImageAnalyzer.analyzeImage(images[i].publicUri),
-                googleResult: await this.googleImageAnalyzer.analyzeImage(images[i].publicUri)
+                // googleResult: await this.googleImageAnalyzer.analyzeImage(images[i].publicUri)
             });
             console.log(`analyzed image ${images[i].name}, processed ${((i+1) / images.length).toFixed(2)}%`);
         }

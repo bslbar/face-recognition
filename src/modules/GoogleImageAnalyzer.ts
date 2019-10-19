@@ -16,7 +16,7 @@ export class GoogleImageAnalyzer {
         return new Promise<any>(async (resolve, reject) => {
             try {                
                 const [response] = await this._client.faceDetection(imageUrl);
-                resolve(response.faceAnnotations[0])
+                resolve(response.faceAnnotations)
             } catch (error) {
                 reject(error);
             }
