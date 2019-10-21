@@ -36,15 +36,9 @@ export class AzureImageAnalyzer {
                     }
                 };
 
-                const responses: any[] = JSON.parse(await request.post(this._uriBase, options));
+                const response: any[] = JSON.parse(await request.post(this._uriBase, options));
                 
-                // add dynamic index to object because conversion doesn't work with arrays
-                let result: object;
-                responses.forEach((response, index) => {
-                    result = JSON.parse(`{ ${index} : ${JSON.stringify(response.faceAttributes)}}`);
-                });
-                
-                resolve(result);
+                resolve(response);
             } catch (error) {
                 reject(error);
             }
