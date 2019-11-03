@@ -10,7 +10,7 @@
     "tsc": "npx tsc"
   },
   "author": "Luca Basilico",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "request": "2.88.0",
     "@azure/storage-blob": "12.0.0-preview.4",

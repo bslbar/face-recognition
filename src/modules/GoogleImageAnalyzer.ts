@@ -1,9 +1,5 @@
 import vision from '@google-cloud/vision';
 
-interface IGoogleFaceVision {
-    cropHintsAnnotation: null
-}
-
 export class GoogleImageAnalyzer {
 
     readonly _client: any;

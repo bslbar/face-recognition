@@ -1,6 +1,5 @@
 import { AzureImageAnalyzer, AzureStorageProcessor, GoogleImageAnalyzer, IStorageProcessorItem } from '../modules';
 
-
 export class AnalysisService {
 
     constructor(
@@ -31,9 +30,9 @@ export class AnalysisService {
                     emotion: face.faceAttributes.emotion
                 });
             });
-            console.log(`analyzed image ${images[i].name}, processed ${((i+1) / images.length).toFixed(2)}%`);
+            console.log(`analyzed AZURE ${images[i].name}, processed ${((i+1) / images.length).toFixed(2)}%`);
         }
-        console.log('created result after Azure analzysis')
+        console.log('created result after AZURE analysis')
 
         return output;
     }
@@ -44,7 +43,7 @@ export class AnalysisService {
         const images = await this.loadImages();
 
         for (let i = 0; i < images.length; i++) {
-            console.log(`Start analyze images ${images[i].name}...`);
+            console.log(`Start GOOGLE analyse ${images[i].name}...`);
 
             const faces =  await this.googleImageAnalyzer.analyzeImage(images[i].publicUri);
             faces.forEach(face => {
@@ -59,9 +58,9 @@ export class AnalysisService {
                     }
                 });
             });
-            console.log(`analyzed image ${images[i].name}, processed ${((i+1) / images.length).toFixed(2)}%`);
+            console.log(`analyzed GOOGLE ${images[i].name}, processed ${((i+1) / images.length).toFixed(2)}%`);
         }
-        console.log('created result after Azure analzysis')
+        console.log('created result after GOOGLE analysis')
 
         return output;
     }
