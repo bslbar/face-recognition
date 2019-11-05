@@ -23,10 +23,10 @@ service.azureWork().then(document => {
     });
 });
 
-service.googleWork().then(document => {
-    console.log('Finished creation Google document!');
-    const parse = new ParseCsv('google-output');
-    parse.do(document).then(() => {
-        console.info('Transformed to CSV!');
-    });
-});
+// service.googleWork().then(document => {
+//     console.log('Finished creation Google document!');
+//     const parse = new ParseCsv('google-output');
+//     parse.do(document).then(() => {
+//         console.info('Transformed to CSV!');
+//     });
+// });

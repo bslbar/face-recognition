@@ -17,12 +17,11 @@ export class AnalysisService {
 
     public async azureWork(): Promise<any> {
         const output: any[] = [];
-    
         const images = await this.loadImages();
 
         for (let i = 0; i < images.length; i++) {
+
             console.log(`Start analyze images ${images[i].name}...`);
-            
             const faces = await this.azureImageAnalyzer.analyzeImage(images[i].publicUri);
             faces.forEach(face => {
                 output.push({
@@ -30,10 +29,11 @@ export class AnalysisService {
                     emotion: face.faceAttributes.emotion
                 });
             });
-            console.log(`analyzed AZURE ${images[i].name}, processed ${((i+1) / images.length).toFixed(2)}%`);
-        }
-        console.log('created result after AZURE analysis')
+            console.log(`analyze AZURE ${images[i].name}, processing ${((i+1) / images.length).toFixed(2)}%`);
 
+        }
+
+        console.log('created result after AZURE analysis')
         return output;
     }
 
