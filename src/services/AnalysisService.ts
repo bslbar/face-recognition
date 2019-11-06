@@ -1,11 +1,18 @@
-import { AzureImageAnalyzer, AzureStorageProcessor, GoogleImageAnalyzer, IStorageProcessorItem } from '../modules';
-import { Subject, from, interval } from 'rxjs';
-import { throttleTime, take } from 'rxjs/operators';
+import { AzureImageAnalyzer, AzureStorageProcessor, GoogleImageAnalyzer, IStorageProcessorItem, IAzureEmotions, IGoogleEmotions } from '../modules';
+import { Subject, interval } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+interface IAzureImageBlock  {
+    image: IStorageProcessorItem;
+    emotions: IAzureEmotions;
+}
+
+interface IGoogleImageBlock {
+    image: IStorageProcessorItem;
+    emotions: IGoogleEmotions;
+}
 
 export class AnalysisService {
-
-    private itemToBeAnalyzed: Subject<IStorageProcessorItem> = new Subject<IStorageProcessorItem>()
-    private itemAnalyzed: Subject<any> = new Subject<any>();
 
     constructor(
         private storageProcessor: AzureStorageProcessor,
@@ -24,7 +31,7 @@ export class AnalysisService {
 
         return new Promise<any>(async (resolve, reject) => {
 
-            const processedImages:Subject<any> = new Subject<any>();
+            const processedImages: Subject<IAzureImageBlock> = new Subject<any>();
             let isCompleted = false;
 
             const images = await this.loadImages();
@@ -43,18 +50,43 @@ export class AnalysisService {
                 console.log(`Start analyze images ${item.name}...`);
 
                 const faces = await this.azureImageAnalyzer.analyzeImage(item.publicUri);
-                faces.forEach(face => {
+                if (faces.length > 0) {
+                    faces.forEach(face => {
+                        processedImages.next({
+                            image: item,
+                            emotions: {
+                                contempt: face.faceAttributes.emotion.comtept,
+                                disgust: face.faceAttributes.emotion.disgust,
+                                fear: face.faceAttributes.emotion.fear,
+                                happiness: face.faceAttributes.emotion.happiness,
+                                neutral: face.faceAttributes.emotion.neutral,
+                                sadness: face.faceAttributes.emotion.sadness,
+                                surprise: face.faceAttributes.emotion.surprise,
+                                anger: face.faceAttributes.emotion.anger
+                            }
+                        });
+                    });
+                } else {
                     processedImages.next({
                         image: item,
-                        emotion: face.faceAttributes.emotion
+                        emotions: {
+                            contempt: null,
+                            disgust: null,
+                            fear: null,
+                            happiness: null,
+                            neutral: null,
+                            sadness: null,
+                            surprise: null,
+                            anger: null
+                        }
                     });
-                });
+                }
 
                 if (isCompleted) {
                     processedImages.complete();
                 }
 
-                console.log(`analyze AZURE ${item.name}, processing ${((index + 1) / images.length).toFixed(2)}%`);
+                console.log(`analyze AZURE ${item.name}, processed ${(((index + 1) / images.length) * 100).toFixed(2)}%`);
             }, null, () => {
                 console.log('created result after AZURE analysis')
                 isCompleted = true;
@@ -63,7 +95,7 @@ export class AnalysisService {
     }
 
     public async googleWork(): Promise<any> {
-        const output: any[] = [];
+        const output: IGoogleImageBlock[] = [];
 
         const images = await this.loadImages();
 
@@ -71,18 +103,32 @@ export class AnalysisService {
             console.log(`Start GOOGLE analyse ${images[i].name}...`);
 
             const faces = await this.googleImageAnalyzer.analyzeImage(images[i].publicUri);
-            faces.forEach(face => {
+            if (faces.length > 0) {
+                faces.forEach(face => {
+                    output.push({
+                        image: images[i],
+                        emotions: {
+                            angerLikelihood: face.angerLikelihood,
+                            blurredLikelihood: face.blurredLikelihood,
+                            joyLikelihood: face.joyLikelihood,
+                            sorrowLikelihood: face.sorrowLikelihood,
+                            surpriseLikelihood: face.surpriseLikelihood,
+                        }
+                    });
+                });
+            } else {
                 output.push({
                     image: images[i],
-                    emotion: {
-                        angerLikelihood: face.angerLikelihood,
-                        blurredLikelihood: face.blurredLikelihood,
-                        joyLikelihood: face.joyLikelihood,
-                        sorrowLikelihood: face.sorrowLikelihood,
-                        surpriseLikelihood: face.surpriseLikelihood,
+                    emotions: {
+                        angerLikelihood: null,
+                        blurredLikelihood: null,
+                        joyLikelihood: null,
+                        sorrowLikelihood: null,
+                        surpriseLikelihood: null
                     }
-                });
-            });
+                })
+            }
+            
             console.log(`analyzed GOOGLE ${images[i].name}, processed ${((i + 1) / images.length).toFixed(2)}%`);
         }
         console.log('created result after GOOGLE analysis')

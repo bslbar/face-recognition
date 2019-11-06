@@ -15,6 +15,17 @@ export interface IAzureImageAnalyzerSettings {
     config: IFaceAttributes
 }
 
+export interface IAzureEmotions {
+    anger: number;
+    contempt: number;
+    disgust: number;
+    fear: number;
+    happiness: number;
+    neutral: number;
+    sadness: number;
+    surprise: number
+}
+
 export class AzureImageAnalyzer {
 
     private readonly _settings: IAzureImageAnalyzerSettings;
