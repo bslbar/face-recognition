@@ -1,6 +1,11 @@
 import { AzureImageAnalyzer, AzureStorageProcessor, GoogleImageAnalyzer, IStorageProcessorItem } from '../modules';
+import { Subject, from, interval } from 'rxjs';
+import { throttleTime, take } from 'rxjs/operators';
 
 export class AnalysisService {
+
+    private itemToBeAnalyzed: Subject<IStorageProcessorItem> = new Subject<IStorageProcessorItem>()
+    private itemAnalyzed: Subject<any> = new Subject<any>();
 
     constructor(
         private storageProcessor: AzureStorageProcessor,
@@ -16,36 +21,56 @@ export class AnalysisService {
     }
 
     public async azureWork(): Promise<any> {
-        const output: any[] = [];
-        const images = await this.loadImages();
 
-        for (let i = 0; i < images.length; i++) {
+        return new Promise<any>(async (resolve, reject) => {
 
-            console.log(`Start analyze images ${images[i].name}...`);
-            const faces = await this.azureImageAnalyzer.analyzeImage(images[i].publicUri);
-            faces.forEach(face => {
-                output.push({
-                    image: images[i],
-                    emotion: face.faceAttributes.emotion
-                });
+            const processedImages:Subject<any> = new Subject<any>();
+            let isCompleted = false;
+
+            const images = await this.loadImages();
+            const output: any[] = [];
+
+            processedImages.subscribe(x => {
+                output.push(x);
+            }, null, () => {
+                resolve(output);
             });
-            console.log(`analyze AZURE ${images[i].name}, processing ${((i+1) / images.length).toFixed(2)}%`);
 
-        }
+            interval(3300).pipe(
+                take(images.length)
+            ).subscribe(async index => {
+                let item = images[index];
+                console.log(`Start analyze images ${item.name}...`);
 
-        console.log('created result after AZURE analysis')
-        return output;
+                const faces = await this.azureImageAnalyzer.analyzeImage(item.publicUri);
+                faces.forEach(face => {
+                    processedImages.next({
+                        image: item,
+                        emotion: face.faceAttributes.emotion
+                    });
+                });
+
+                if (isCompleted) {
+                    processedImages.complete();
+                }
+
+                console.log(`analyze AZURE ${item.name}, processing ${((index + 1) / images.length).toFixed(2)}%`);
+            }, null, () => {
+                console.log('created result after AZURE analysis')
+                isCompleted = true;
+            });
+        });
     }
 
     public async googleWork(): Promise<any> {
         const output: any[] = [];
-    
+
         const images = await this.loadImages();
 
         for (let i = 0; i < images.length; i++) {
             console.log(`Start GOOGLE analyse ${images[i].name}...`);
 
-            const faces =  await this.googleImageAnalyzer.analyzeImage(images[i].publicUri);
+            const faces = await this.googleImageAnalyzer.analyzeImage(images[i].publicUri);
             faces.forEach(face => {
                 output.push({
                     image: images[i],
@@ -58,7 +83,7 @@ export class AnalysisService {
                     }
                 });
             });
-            console.log(`analyzed GOOGLE ${images[i].name}, processed ${((i+1) / images.length).toFixed(2)}%`);
+            console.log(`analyzed GOOGLE ${images[i].name}, processed ${((i + 1) / images.length).toFixed(2)}%`);
         }
         console.log('created result after GOOGLE analysis')
 
