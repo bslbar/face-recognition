@@ -27,6 +27,10 @@ export class AnalysisService {
         return this.storageProcessor.getFileUrisAsync();
     }
 
+    private getPercentage(index: number, base: number): number {
+        return Number(((Number(index + 1) / base) * 100).toFixed(2));
+    }
+
     public async azureWork(): Promise<any> {
 
         return new Promise<any>(async (resolve, reject) => {
@@ -86,7 +90,7 @@ export class AnalysisService {
                     processedImages.complete();
                 }
 
-                console.log(`analyze AZURE ${item.name}, processed ${(((index + 1) / images.length) * 100).toFixed(2)}%`);
+                console.log(`analyze AZURE ${item.name}, processed ${this.getPercentage(index, images.length)}%`);
             }, null, () => {
                 console.log('created result after AZURE analysis')
                 isCompleted = true;
@@ -129,7 +133,7 @@ export class AnalysisService {
                 })
             }
             
-            console.log(`analyzed GOOGLE ${images[i].name}, processed ${((i + 1) / images.length).toFixed(2)}%`);
+            console.log(`analyzed GOOGLE ${images[i].name}, processed ${this.getPercentage(i, images.length)}%`);
         }
         console.log('created result after GOOGLE analysis')
 
