@@ -1,9 +1,13 @@
 # load packages
-library(magrittr)
 library(readr)
 library(dplyr)
 
-# load data
-azure <- read.csv(file="C:\\Users\\giggia\\Documents\\tesi\\imagehatch\\azure-output.csv", header=TRUE, sep=",")
+# load and read CSV data 
+google_csv <- read.csv(file = "google-output.csv", header = TRUE, sep = ",")
 
-azure
+ids <- google_csv %>% 
+    group_by(image.name) %>%
+    summarize(n())
+  
+ids
+
