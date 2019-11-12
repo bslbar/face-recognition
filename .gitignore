@@ -2,6 +2,7 @@
 /[Aa]rtifacts
 
 *.csv
+*.Rhistory
 
 # Logs
 logs

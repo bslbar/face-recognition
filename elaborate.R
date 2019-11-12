@@ -10,4 +10,3 @@ ids <- google_csv %>%
     summarize(n())
   
 ids
-
