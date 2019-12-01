@@ -2,15 +2,13 @@ import { AzureImageAnalyzer, AzureStorageProcessor, GoogleImageAnalyzer, IStorag
 import { Subject, interval } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-interface IAzureImageBlock  {
-    image: IStorageProcessorItem;
-    emotions: IAzureEmotions;
+interface IImage {
+    name: string;
+    url: string;
 }
 
-interface IGoogleImageBlock {
-    image: IStorageProcessorItem;
-    emotions: IGoogleEmotions;
-}
+interface IAzureImageBlock extends IImage, IAzureEmotions  { }
+interface IGoogleImageBlock extends IImage,IGoogleEmotions  { }
 
 export class AnalysisService {
 
@@ -57,32 +55,30 @@ export class AnalysisService {
                 if (faces.length > 0) {
                     faces.forEach(face => {
                         processedImages.next({
-                            image: item,
-                            emotions: {
-                                contempt: face.faceAttributes.emotion.comtept,
-                                disgust: face.faceAttributes.emotion.disgust,
-                                fear: face.faceAttributes.emotion.fear,
-                                happiness: face.faceAttributes.emotion.happiness,
-                                neutral: face.faceAttributes.emotion.neutral,
-                                sadness: face.faceAttributes.emotion.sadness,
-                                surprise: face.faceAttributes.emotion.surprise,
-                                anger: face.faceAttributes.emotion.anger
-                            }
+                            name: item.name,
+                            url: item.publicUri,
+                            contempt: face.faceAttributes.emotion.comtept,
+                            disgust: face.faceAttributes.emotion.disgust,
+                            fear: face.faceAttributes.emotion.fear,
+                            happiness: face.faceAttributes.emotion.happiness,
+                            neutral: face.faceAttributes.emotion.neutral,
+                            sadness: face.faceAttributes.emotion.sadness,
+                            surprise: face.faceAttributes.emotion.surprise,
+                            anger: face.faceAttributes.emotion.anger
                         });
                     });
                 } else {
                     processedImages.next({
-                        image: item,
-                        emotions: {
-                            contempt: null,
-                            disgust: null,
-                            fear: null,
-                            happiness: null,
-                            neutral: null,
-                            sadness: null,
-                            surprise: null,
-                            anger: null
-                        }
+                        name: item.name,
+                        url: item.publicUri,
+                        contempt: null,
+                        disgust: null,
+                        fear: null,
+                        happiness: null,
+                        neutral: null,
+                        sadness: null,
+                        surprise: null,
+                        anger: null
                     });
                 }
 
@@ -110,26 +106,24 @@ export class AnalysisService {
             if (faces.length > 0) {
                 faces.forEach(face => {
                     output.push({
-                        image: images[i],
-                        emotions: {
-                            angerLikelihood: face.angerLikelihood,
-                            blurredLikelihood: face.blurredLikelihood,
-                            joyLikelihood: face.joyLikelihood,
-                            sorrowLikelihood: face.sorrowLikelihood,
-                            surpriseLikelihood: face.surpriseLikelihood,
-                        }
+                        name: images[i].name,
+                        url: images[i].publicUri,
+                        angerLikelihood: face.angerLikelihood,
+                        blurredLikelihood: face.blurredLikelihood,
+                        joyLikelihood: face.joyLikelihood,
+                        sorrowLikelihood: face.sorrowLikelihood,
+                        surpriseLikelihood: face.surpriseLikelihood,
                     });
                 });
             } else {
                 output.push({
-                    image: images[i],
-                    emotions: {
-                        angerLikelihood: null,
-                        blurredLikelihood: null,
-                        joyLikelihood: null,
-                        sorrowLikelihood: null,
-                        surpriseLikelihood: null
-                    }
+                    name: images[i].name,
+                    url: images[i].publicUri,
+                    angerLikelihood: null,
+                    blurredLikelihood: null,
+                    joyLikelihood: null,
+                    sorrowLikelihood: null,
+                    surpriseLikelihood: null
                 })
             }
             

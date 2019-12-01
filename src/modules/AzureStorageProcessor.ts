@@ -1,4 +1,4 @@
-import { BlobServiceClient, SharedKeyCredential, ContainerClient } from "@azure/storage-blob";
+import { BlobServiceClient, ContainerClient, StorageSharedKeyCredential } from "@azure/storage-blob";
 
 export interface IAzureStorageProcessorSettings {
     account: string;
@@ -20,9 +20,8 @@ export class AzureStorageProcessor {
     private readonly _containerClient: ContainerClient;
 
     constructor(settings: IAzureStorageProcessorSettings) {
-
         this._settings = settings;
-        const sharedKey = new SharedKeyCredential(this._settings.account, this._settings.accountKey);
+        const sharedKey = new StorageSharedKeyCredential(this._settings.account, this._settings.accountKey);
         this._blobServiceClient = new BlobServiceClient(`https://${this._settings.account}.blob.core.windows.net`, sharedKey);
         this._containerClient = this._blobServiceClient.getContainerClient(this._settings.containerName);
     }
