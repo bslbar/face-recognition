@@ -27,4 +27,24 @@ export class GoogleImageAnalyzer {
         });
     }
 
+    transcodingEmotionsValue(emotion: string): string {
+        switch (emotion) {
+            case 'UNKNOWN':
+                return null;
+            case 'VERY_UNLIKELY':
+                return '0.1';
+            case 'UNLIKELY':
+                return '0.25';
+            case 'POSSIBLE':
+                return '0.5';
+            case 'LIKELY':
+                return '0.75';
+            case 'VERY_LIKELY':
+                return '0.9';
+            default:
+                break;
+        }
+        return null;
+    }
+
 }

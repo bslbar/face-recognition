@@ -45,7 +45,4 @@ export class AzureStorageProcessor {
         });
     }
 
-    dispose(): Promise<void> {
-        return new Promise<void>(resolve => resolve());
-    }
 }

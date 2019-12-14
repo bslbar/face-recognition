@@ -108,11 +108,11 @@ export class AnalysisService {
                     output.push({
                         name: images[i].name,
                         url: images[i].publicUri,
-                        angerLikelihood: face.angerLikelihood,
-                        blurredLikelihood: face.blurredLikelihood,
-                        joyLikelihood: face.joyLikelihood,
-                        sorrowLikelihood: face.sorrowLikelihood,
-                        surpriseLikelihood: face.surpriseLikelihood,
+                        angerLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.angerLikelihood),
+                        blurredLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.blurredLikelihood),
+                        joyLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.joyLikelihood),
+                        sorrowLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.sorrowLikelihood),
+                        surpriseLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.surpriseLikelihood),
                     });
                 });
             } else {

@@ -15,13 +15,13 @@ const googleImageAnalyzer: GoogleImageAnalyzer = new GoogleImageAnalyzer();
 
 const service = new AnalysisService(azureStorageProcessor, azureImageAnalyzer, googleImageAnalyzer);
 
-service.azureWork().then(document => {
-    console.log('Finished creation Azure document!');
-    const parse = new ParseCsv(AZURE_FILE);
-    parse.do(document).then(() => {
-        console.info('Transformed to AZURE-CSV!');
-    });
-});
+// service.azureWork().then(document => {
+//     console.log('Finished creation Azure document!');
+//     const parse = new ParseCsv(AZURE_FILE);
+//     parse.do(document).then(() => {
+//         console.info('Transformed to AZURE-CSV!');
+//     });
+// });
 
 service.googleWork().then(document => {
     console.log('Finished creation Google document!');
