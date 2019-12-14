@@ -1,4 +1,5 @@
 import vision from '@google-cloud/vision';
+import { EmotionsLabelGoogleEnum } from '../enums';
 
 export interface IGoogleEmotions {
     angerLikelihood: string;
@@ -29,17 +30,17 @@ export class GoogleImageAnalyzer {
 
     transcodingEmotionsValue(emotion: string): string {
         switch (emotion) {
-            case 'UNKNOWN':
+            case EmotionsLabelGoogleEnum.UNKNOWN:
                 return null;
-            case 'VERY_UNLIKELY':
+            case EmotionsLabelGoogleEnum.VERY_LIKELY:
                 return '0.1';
-            case 'UNLIKELY':
+            case EmotionsLabelGoogleEnum.VERY_UNLIKELY:
                 return '0.25';
-            case 'POSSIBLE':
+            case EmotionsLabelGoogleEnum.POSSIBLE:
                 return '0.5';
-            case 'LIKELY':
+            case EmotionsLabelGoogleEnum.LIKELY:
                 return '0.75';
-            case 'VERY_LIKELY':
+            case EmotionsLabelGoogleEnum.VERY_LIKELY:
                 return '0.9';
             default:
                 break;

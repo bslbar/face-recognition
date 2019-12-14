@@ -1,14 +1,15 @@
 import { AzureImageAnalyzer, AzureStorageProcessor, GoogleImageAnalyzer, IStorageProcessorItem, IAzureEmotions, IGoogleEmotions } from '../modules';
 import { Subject, interval } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { ContainersNameAzureEnum } from '../enums';
 
 interface IImage {
     name: string;
     url: string;
 }
 
-interface IAzureImageBlock extends IImage, IAzureEmotions  { }
-interface IGoogleImageBlock extends IImage,IGoogleEmotions  { }
+interface IAzureImageBlock extends IImage, IAzureEmotions { }
+interface IGoogleImageBlock extends IImage, IGoogleEmotions { }
 
 export class AnalysisService {
 
@@ -27,6 +28,19 @@ export class AnalysisService {
 
     private getPercentage(index: number, base: number): number {
         return Number(((Number(index + 1) / base) * 100).toFixed(2));
+    }
+
+    getContainerName(containerName: string): string {
+        switch (containerName) {
+            case ContainersNameAzureEnum.ABOUTME:
+                return ContainersNameAzureEnum.ABOUTME;
+            case ContainersNameAzureEnum.PERSON:
+                return ContainersNameAzureEnum.PERSON;
+            case ContainersNameAzureEnum.PEOPLE:
+                return ContainersNameAzureEnum.PEOPLE;
+            default:
+                return '';
+        }
     }
 
     public async azureWork(): Promise<any> {
@@ -126,7 +140,7 @@ export class AnalysisService {
                     surpriseLikelihood: null
                 })
             }
-            
+
             console.log(`analyzed GOOGLE ${images[i].name}, processed ${this.getPercentage(i, images.length)}%`);
         }
         console.log('created result after GOOGLE analysis')
