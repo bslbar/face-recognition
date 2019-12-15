@@ -3,7 +3,6 @@ import { EmotionsLabelGoogleEnum } from '../enums';
 
 export interface IGoogleEmotions {
     angerLikelihood: string;
-    blurredLikelihood: string;
     joyLikelihood: string;
     sorrowLikelihood: string;
     surpriseLikelihood: string;

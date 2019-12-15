@@ -123,7 +123,6 @@ export class AnalysisService {
                         name: images[i].name,
                         url: images[i].publicUri,
                         angerLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.angerLikelihood),
-                        blurredLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.blurredLikelihood),
                         joyLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.joyLikelihood),
                         sorrowLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.sorrowLikelihood),
                         surpriseLikelihood: this.googleImageAnalyzer.transcodingEmotionsValue(face.surpriseLikelihood),
@@ -134,7 +133,6 @@ export class AnalysisService {
                     name: images[i].name,
                     url: images[i].publicUri,
                     angerLikelihood: null,
-                    blurredLikelihood: null,
                     joyLikelihood: null,
                     sorrowLikelihood: null,
                     surpriseLikelihood: null
