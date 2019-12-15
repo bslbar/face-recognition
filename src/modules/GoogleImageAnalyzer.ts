@@ -31,9 +31,9 @@ export class GoogleImageAnalyzer {
         switch (emotion) {
             case EmotionsLabelGoogleEnum.UNKNOWN:
                 return null;
-            case EmotionsLabelGoogleEnum.VERY_LIKELY:
-                return '0.1';
             case EmotionsLabelGoogleEnum.VERY_UNLIKELY:
+                return '0.1';
+            case EmotionsLabelGoogleEnum.UNLIKELY:
                 return '0.25';
             case EmotionsLabelGoogleEnum.POSSIBLE:
                 return '0.5';
