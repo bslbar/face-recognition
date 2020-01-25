@@ -16,7 +16,7 @@ export class GoogleImageAnalyzer {
         this._client = new vision.ImageAnnotatorClient();
     }
 
-    analyzeImage(imageUrl: string): Promise<any> {
+    public analyzeImage(imageUrl: string): Promise<any> {
         return new Promise<any>(async (resolve, reject) => {
             try {
                 const [response] = await this._client.faceDetection(imageUrl);
@@ -27,7 +27,7 @@ export class GoogleImageAnalyzer {
         });
     }
 
-    transcodingEmotionsValue(emotion: string): string {
+    public transcodingEmotionsValue(emotion: string): string {
         switch (emotion) {
             case EmotionsLabelGoogleEnum.UNKNOWN:
                 return null;

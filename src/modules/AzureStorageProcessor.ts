@@ -26,7 +26,7 @@ export class AzureStorageProcessor {
         this._containerClient = this._blobServiceClient.getContainerClient(this._settings.containerName);
     }
 
-    getFileUrisAsync(): Promise<IStorageProcessorItem[]> {
+    public getFileUrisAsync(): Promise<IStorageProcessorItem[]> {
         return new Promise(async (resolve, reject) => {
             try {
                 const blobs: IStorageProcessorItem[] = [];

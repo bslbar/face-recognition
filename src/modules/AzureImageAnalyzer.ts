@@ -36,7 +36,7 @@ export class AzureImageAnalyzer {
         this._uriBase = `${this._settings.endpoint}?returnFaceId=${this._settings.config.returnFaceId}&returnFaceLandmarks=${this._settings.config.returnFaceId}&returnFaceAttributes=${this._settings.config.returnFaceAttributes}&recognitionModel=${this._settings.config.recognitionModel}&returnRecognitionModel=${this._settings.config.returnRecognitionModel}&detectionModel=${this._settings.config.detectionModel}`;
     }
 
-    analyzeImage(imageUrl: string): Promise<any> {
+    public analyzeImage(imageUrl: string): Promise<any> {
         return new Promise<any>(async (resolve, reject) => {
             try {
                 const options = {
@@ -44,7 +44,7 @@ export class AzureImageAnalyzer {
                     headers: {
                         'Content-Type': 'application/json',
                         'Ocp-Apim-Subscription-Key': this._settings.subscriptionKey
-                    }
+                        }
                 };
 
                 const response: any[] = JSON.parse(await request.post(this._uriBase, options));

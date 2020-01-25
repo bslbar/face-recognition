@@ -30,7 +30,7 @@ export class AnalysisService {
         return Number(((Number(index + 1) / base) * 100).toFixed(2));
     }
 
-    getContainerName(containerName: string): string {
+    public getContainerName(containerName: string): string {
         switch (containerName) {
             case ContainersNameAzureEnum.ABOUTME:
                 return ContainersNameAzureEnum.ABOUTME;

@@ -5,11 +5,11 @@ export class ParseCsv {
 
     private _nameDocument: string;
 
-    constructor(private nameDocument: string) {
+    constructor(nameDocument: string) {
         this._nameDocument = nameDocument;
     }
 
-    async do(document: any) {
+    public async do(document: any) {
         json2csvAsync(document, {
             emptyFieldValue: []
         })
