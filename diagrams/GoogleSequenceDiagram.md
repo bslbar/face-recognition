@@ -24,5 +24,5 @@ sequenceDiagram
     M->>+PCSV: do()	
     PCSV->>+PCSV: transform data to CSV	
     PCSV->>+M: return	
-    PCSV->>+U: get CSV Google faces 	
+    M->>+U: get CSV Google faces 	
 ```
