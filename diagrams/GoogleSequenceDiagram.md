@@ -6,6 +6,7 @@ sequenceDiagram
     participant AS as AnalysisService
     participant GIA as GoogleImageAnalyzer
     participant ASP as AzureStorageProcessor
+    participant SDKSTORAGE as SDK Azure Storage
     participant PCSV as ParseCsv
     participant GOOGLE as Client Cloud Vision
 	U->>+M: Run program						
@@ -13,7 +14,9 @@ sequenceDiagram
 	S->>-M: get class and settings							
 	M->>+AS: googleWork()						
 	AS->>+ASP: loadImages()	
-	ASP->>-AS: list of url images					
+	ASP->>+SDKSTORAGE: getFileUrisAsync()
+    SDKSTORAGE->>-ASP: get list of images url
+    ASP->>-AS: get list of images				
 	AS->>+GIA: analyzeImage()					
 	GIA->>+GOOGLE: faceDetection()			
 	GOOGLE-->>-GIA: list faces detection	

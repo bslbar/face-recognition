@@ -6,6 +6,7 @@ sequenceDiagram
     participant AS as AnalysisService
     participant AIA as AzureImageAnalyzer
     participant ASP as AzureStorageProcessor
+    participant SDKSTORAGE as SDK Azure Storage
     participant PCSV as ParseCsv
     participant AZURE as Azure Face API
 	U->>+M: Run program						
@@ -13,7 +14,9 @@ sequenceDiagram
 	S->>-M: get class and settings							
 	M->>+AS: azureWork()						
 	AS->>+ASP: loadImages()	
-	ASP->>-AS: getFileUrisAsync()					
+	ASP->>+SDKSTORAGE: getFileUrisAsync()
+    SDKSTORAGE->>-ASP: get list of images url
+    ASP->>-AS: get list of images					
 	AS->>+AIA: analyzeImage()					
 	AIA->>+AZURE: request FaceDetection					
 	AZURE-->>-AIA: list faces detection					
