@@ -1,5 +1,5 @@
 export enum ContainersNameAzureEnum {
-    ABOUTME = 'aboutme',
-    PEOPLE = 'people',
-    PERSON = 'person'
+  ABOUTME = "aboutme",
+  PEOPLE = "people",
+  PERSON = "person"
 }
