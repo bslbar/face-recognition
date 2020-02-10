@@ -1,4 +1,5 @@
 ```mermaid
+
 stateDiagram
     state fork_state <<fork>>
       [*] --> GetAndSetEnvironmentCredentials
@@ -16,8 +17,9 @@ stateDiagram
       state Google {
             [*] --> GetListImages
             GetListImages --> AnalyzeImage
-            AnalyzeImage --> ConfertEnumToNumber
+            AnalyzeImage --> ConvertStringToNumber
       }
       Google --> ConvertJSONtoCSV
       ConvertJSONtoCSV --> [*]
+
 ```

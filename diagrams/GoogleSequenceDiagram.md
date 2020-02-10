@@ -21,7 +21,7 @@ sequenceDiagram
 	GIA->>+GOOGLE: faceDetection()			
 	GOOGLE-->>-GIA: list faces detection	
     AS->>+GIA: transcodingEmotionsValue()					
-	GIA-->>-AS: convert Enum value to Number								
+	GIA-->>-AS: convert String value to Number								
 	AS-->>-M: get face values
     M->>+PCSV: do()	
     PCSV->>+PCSV: transform data to CSV	
