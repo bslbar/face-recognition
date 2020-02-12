@@ -16,10 +16,9 @@ sequenceDiagram
 	AS->>+ASP: loadImages()	
 	ASP->>+SDKSTORAGE: getFileUrisAsync()
     SDKSTORAGE->>-ASP: get list of images url
-    ASP->>-AS: get list of images				
-	AS->>+GIA: analyzeImage()					
-	GIA->>+GOOGLE: faceDetection()			
-	GOOGLE-->>-GIA: list faces detection	
+    ASP->>-AS: get list of images						
+	AS->>+GOOGLE: faceDetection()			
+	GOOGLE-->>-AS: list faces detection	
     AS->>+GIA: transcodingEmotionsValue()					
 	GIA-->>-AS: convert String value to Number								
 	AS-->>-M: get face values
