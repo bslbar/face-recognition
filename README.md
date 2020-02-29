@@ -39,9 +39,11 @@ At the root project you have to create a .local folder and inside you have to mo
 Azure uses a REST API while Google uses a SDK.
 
 - Google credentials 
+
 It's well explain in [their site](https://cloud.google.com/docs/authentication/getting-started) so you should follow their instructions.
 
 - SettingJson
+
 It's a create json and you have to insert your credentials and keys for a Microsoft Azure configuration.
 As you can see, inside key *azure_vision-config* there are some attributes that set your expetions about Azure service. 
 Keep the attention on these keys:
