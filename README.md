@@ -8,8 +8,14 @@ In fact, Google and Microsoft are really committed about these projects. As you 
 
 ## Some links for more in depth learning
 ### Books
-
+- [Machine Learning: The New AI](https://www.amazon.com/Machine-Learning-Press-Essential-Knowledge/dp/0262529513)
+    - author: Ethem Alpaydin 
+    - series: MIT Press Essential Knowledge series
+    - publisher: The MIT Press (October 7, 2016)
+    - ISBN-13: 978-0262529518
 ### Sites
+- [Microsoft Cognitive service](https://azure.microsoft.com/en-us/services/cognitive-services/face/)
+- [Google Vision API](https://cloud.google.com/vision/docs)
 
 Code
 ------------
