@@ -1,5 +1,4 @@
 ```mermaid
-
 stateDiagram
     state fork_state <<fork>>
       [*] --> GetAndSetEnvironmentCredentials
@@ -21,5 +20,4 @@ stateDiagram
       }
       Google --> ConvertJSONtoCSV
       ConvertJSONtoCSV --> [*]
-
 ```
